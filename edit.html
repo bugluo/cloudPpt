@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+	<head>
+		<!--[if lt IE 9]><script src="/js/jquery-1.9.1.js"></script><![endif]-->
+		<!--[if gte IE 9]><!--><script src="/js/jquery-2.0.0b2.js"></script><!--<![endif]-->
+		<script src="/js/jquery-ui-1.10.2.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<meta charset="utf-8" />
+		<title>云演示 - 360 安全浏览器实验室</title>
+	</head>
+	<body>
+
+		<link href="/css/app/ui.css" rel="styleSheet" />
+		<script src="/js/app/effect.js"></script>
+		<script src="../js/app/dataPersistence.js"></script>
+		<script src="/js/app/ui-basic.js"></script>
+		<script src="/js/app/ui-edit.js"></script>
+		<script src="/js/app/slide.js"></script>
+		
+
+		<link href="css/app/slide.css" rel="styleSheet" />
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+
+		<script src="../js/jquery.qrcode.min.js"></script>
+		<script src="../js/jquery.colorpicker.js"></script>
+		<script src="../js/app/toolBar.js"></script>
+		<script src="../js/app/editor.js"></script>
+		
+		<header></header>
+		<div class="ui-login"></div>
+		<div class="ui-title">测试</div>
+		<div class="ui-slide-tool" style="padding:15px 0 0 300px;height:60px;" id="toolbar"></div>
+		<div class="ue-list" >
+		</div>
+		<div class="ui-action btn-group" style="position:absolute;bottom:0;left:0; height:30px;width:210px;padding:15px;">
+			<a class="btn" data-action="create" title="新建" ><i class="icon-plus"></i> </a>
+			<a class="btn" data-action="save" title="保存"><i  class="icon-file"></i> </a>
+			<a class="btn" data-action="play" title="播放"><i  class="icon-play"></i></a>
+		</div>
+		<iframe scrolling="no" id='content' style="width:80%;height:80%;background-color: #b0b0b0; position:absolute; top: 110px; left: 250px; display: block; border: none;z-index:-1; "></iframe>
+		<div class="ui-tpl" style="position:absolute; padding-bottom: 15px; padding-left: 10px; top: 30%; background-color: #fff; box-shadow: 0 0 5px #808080;">
+			<a style="position:absolute;right:0;cursor:pointer" id="ui-tpl-close"><i class="icon-remove"></i></a>
+		</div>
+		<script>
+
+
+			$("#ui-tpl-close").click(function(){
+				$(this).parent().hide();
+			})
+
+			var id___;
+
+			var t,l,w,h,tt,dw,dh;
+
+			$( document ).bind(
+			    'fullscreenchange webkitfullscreenchange mozfullscreenchange',
+			    function(){
+			    	var cro = $("<div id='#qrcode' style='position:absolute;top:0;right:0;'></div>");
+			    	var shadow = $("<div id='shadow' style='position:absolute;top:0;left:0;width:"+$(document).width()+"px;height:"+$(document).height()+"px;z-index:100000'></div>");
+			    	if(document.webkitIsFullScreen){
+			    		$($frame[0].contentWindow.document.body).append(shadow);		    		
+			    		if($($frame[0].contentWindow.document.body).data('file_id')){
+			    			cro.qrcode({text:'http://cppt.browser.360.cn/socket.html?='+$($frame[0].contentWindow.document.body).data('file_id')}).css("transform","scale(0.2)");
+			    			cro.mouseover(function(){
+			    				$(this).css("transform","scale(1)");
+			    			})
+			    			cro.mouseout(function(){
+			    				$(this).css("transform","scale(0.2)");
+			    			})
+			    			shadow.append(cro);
+			    		}
+			    	    DataPersistence.openChannel(id___||'test');
+			    		dw = $(document).width();
+			    		dh = $(document).height();
+			    		console.log($($frame[0].contentDocument).width());
+			    		console.log($(document).height());
+			    		t = $frame.css("top"),l = $frame.css("left"),w = $($frame[0].contentDocument.querySelector(".slide")).width()+100,h = $($frame[0].contentDocument.querySelector(".slide")).height(),tt = $($frame[0].contentWindow.document.querySelector('.slide')).css("top");
+			    		$($frame[0].contentWindow.document.querySelectorAll('.slide')).css({"transform":"scale("+$(document).width()/w+","+$(document).height()/h+")","z-index":"9999","margin":"0 auto",top:($(document).height()-$($frame[0].contentDocument.querySelector(".slide")).height())/2});
+			    		$frame.css({"width":$(document).width(),"height":$(document).height()+110,"z-index":"9999","top":0,"left":0});
+			    		Animate.show($($frame[0].contentWindow.document.querySelector('.slide')));
+			    		$frame[0].contentWindow.document.documentElement.focus();
+
+			    		$(document).keydown(function(e){
+					        switch(e.keyCode){
+					            case 32:
+					            editor.next();
+					            break;
+					            case 13:
+					            editor.next();
+					            break;
+					            case 37:
+					            editor.last();
+					            break;
+					            case 38:
+					            editor.last();
+					            break;
+					            case 40:
+					            editor.next();
+					            break;
+					            case 39:
+					            editor.next();
+					            break;
+					        }
+					    })
+			    	}
+			    	else{
+
+			    		$(document).unbind('keydown');
+
+			    		editor.stop();
+			    		$($frame[0].contentWindow.document.body).find("#shadow").remove();
+			    		$($frame[0].contentWindow.document.getElementById("#qrcode")).remove();
+			    		DataPersistence.closeChannel();
+			    		$frame.css({"top":t,"left":l,"height":"80%","width":"80%","z-index":"-1"});
+			    		$($frame[0].contentWindow.document.querySelectorAll('.slide')).css({"z-index":"","transform":"","top":tt});
+			    	}
+			    }
+			);
+
+			var queryString=function(key){
+ 			   return (document.location.search.match(new RegExp("(?:^\\?|&)"+key+"=(.*?)(?=&|$)"))||['',null])[1];
+			}
+			if(queryString('title'))
+				$(".ui-title").html(decodeURI(queryString('title')));
+			
+
+
+			
+
+			var $headUI = $('header').headUI({ "location": [{ "url": "/edit.html", "title": "编辑演示" }] });
+			var $loginUI = $('.ui-login').loginUI({ visible: false }), // 初始不可见
+				$tempUI = $('.ui-tpl').tempUI({ visible: false }),
+				$action = $('.ui-action'),
+				$frame = $('iframe'),
+				$listUI = $('.ue-list').slideUI({ frame: $frame[0] });
+			$action.delegate('.btn', 'click', function (e) {
+				switch ($(e.currentTarget).data('action')) {
+					case 'create':
+						$tempUI.show();
+						break;
+					case 'remove':
+						$listUI.slideUI('remove');
+						break;
+					case 'save':
+						DataPersistence.save($frame[0].contentWindow.document.body,{title:$('.ui-title').html()},function(b){
+							console.log(b);
+						});
+						break;
+					case 'play':
+					//	DataPersistence.save($frame[0].contentWindow.document.body,{title:$('.ui-title').html()},function(b){
+							editor.play();
+				//		});
+						
+						break;
+				}
+			});
+			if (false) { // TODO LOGIN 检查
+				$loginUI.show();
+				$headUI.headUI('pop');
+				$headUI.headUI('push', { "url": "#login", "title": "登陆" });
+			} 
+			$frame.attr('width', window.innerWidth - 240)
+				.attr('height', window.innerHeight - 220)
+				.on('load', function () {
+					/// 1. 如果存在已经保存了的数据，加载还原
+					var draft = sessionStorage.getItem("edit.draft");
+					/// 2. 如果打开者提供了Slide，则创建之
+					var html = localStorage.getItem('edit.html');
+					console.log(html);
+					if (draft) {
+						draft = JSON.parse(draft);
+						for (var i = 0; i < draft.length; ++i) {
+							$listUI.slideUI("push",draft[i]);
+						}
+						/// 3. 若提供了模版文
+						var file = sessionStorage.getItem('edit.template');
+						$tempUI = $('.ui-tpl').tempUI("option","template", file);
+					} else if (html) {
+						$listUI.slideUI('redraw',null,html,true);
+					//	$listUI.slideUI('push', html);
+						/// 3. 若提供了模版文
+						var file = localStorage.getItem('edit.template');
+						$tempUI = $('.ui-tpl').tempUI("option","template", file);
+					}
+					$tempUI.on('tempuiselect', function (e, ui) {
+						$($("#content")[0].contentWindow.document.querySelectorAll('.slide')).hide();
+						$listUI.slideUI('push', ui.html);
+						$tempUI.hide();
+						editor.setSlide($("#content")[0].contentWindow.document);
+					});
+
+					if(queryString('id')){
+						DataPersistence.read($("#content")[0].contentWindow.document.body,queryString('id'),function(html){
+							$listUI.slideUI('redraw',null,html);
+							editor.setSlide($("#content")[0].contentWindow.document);
+						});
+					}
+					else{
+						editor.setSlide($("#content")[0].contentWindow.document);
+					}
+					var slides = $frame[0].contentDocument.querySelectorAll(".slide");
+					var top = $frame.height()-$($frame[0].contentDocument.querySelector(".slide")).height();
+					$(slides).css({"top":top/2,"position":"reletive"});
+			});
+			
+
+
+			$frame.attr('src', '/slide/preview.html?_=' + Math.random());
+
+			var toolbar = new ToolBar('toolbar');
+			var editor = new Editor(toolbar);
+	
+
+			
+			
+			
+		</script>
+	</body>
+</html>

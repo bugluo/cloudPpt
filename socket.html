@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>云演示 - 控制</title>
+	</head>
+	<body>
+
+		<input type='button' value='向前' id='last'>
+		<input type='button' value='向后' id='next'>
+
+		<script>
+			var queryString=function(key){
+ 			   return (document.location.search.match(new RegExp("(?:^\\?|&)"+key+"=(.*?)(?=&|$)"))||['',null])[1];
+			}
+
+			var channel = queryString("channel_id")||'test';
+			
+			var addr = 'ws://frontend.browser.360.cn:8080/channel/'+channel;
+			var socket = new WebSocket(addr);  
+			socket.onopen = function(event) { 
+			  socket.send('I am the client and I\'m listening!');
+			  socket.onmessage = function(event) { 
+			    console.log('Client received a message',event); 
+			  };
+			  socket.onclose = function(event) { 
+			    console.log('Client notified socket has closed',event); 
+			  };
+			};
+		
+			$('last').onclick = function(){
+				socket.send('last');
+			}
+
+			$('next').onclick = function(){
+				socket.send('next');
+			}
+
+			function $(id){
+				return document.getElementById(id);
+			}
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,47 @@
+﻿
+
+.uc-tpl-frame {
+    display:none;
+}
+.uc-tpl-section {
+	float:left;
+	overflow:hidden;
+	padding: 0 10px 10px 5px;
+}
+.uc-tpl-title {
+	font-weight: bold;
+	font-family: Monaco,Consolas,'Courier New';
+	padding-bottom: 5px;
+	margin-bottom: 15px;
+}
+.uc-tpl-title span {
+	font-size: 14px;
+	color: #a0a0a0;
+}
+.uc-tpl-section canvas {
+	border: 1px solid #808080;
+	box-shadow: 0 0 5px #a0a0a0;
+	float: left;
+	margin-right: 15px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.uc-tpl-section canvas.active {
+	outline: 2px solid orange;
+}
+.ue-list {
+    text-align: center;
+}
+.ue-list canvas {
+    border:1px solid #808080;
+    box-shadow: 0 0 4px #808080;
+    margin-bottom: 15px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+.ue-list canvas.active {
+    outline: 2px solid #90b0e0;
+}

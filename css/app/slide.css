@@ -1,0 +1,94 @@
+﻿body {
+     background: #b0b0b0;
+}
+
+
+a:hover{
+    text-decoration: underline; 
+}
+
+*:focus { outline: none; }
+.slide {
+    position: relative;
+    font-family: "微软雅黑","黑体",Arial,Tahoma;
+    font-size: 24px;
+    width: 800px;
+    height: 600px;
+    background: #fff;
+    border: 1px solid #808080;
+    box-shadow: 0 0 6px #808080;
+    margin:0 auto;
+}
+.slide .rect {
+    position: absolute;
+}
+.slide .rect span {
+}
+
+.func-group{
+    
+}
+
+.slide .rect:hover {
+    border:bule 1px dashed;
+}
+
+::-webkit-scrollbar-track-piece{ 
+    background-color:#fff; 
+    -webkit-border-radius:3; 
+} 
+::-webkit-scrollbar{ 
+    width:8px; 
+    height:8px; 
+} 
+::-webkit-scrollbar-thumb{ 
+    height:30px; 
+    background-color:rgb(221,221,221); 
+    -webkit-border-radius:7px; 
+    border: 1px solid #fff; 
+} 
+::-webkit-scrollbar-thumb:hover{ 
+    height:30px; 
+    background-color:#9f9f9f; 
+    -webkit-border-radius:8px; 
+} 
+
+.ui-title{
+    float:left;
+    padding-top:15px;
+    padding-left:40px;
+    height:24px;
+    font-size: 24px;
+    font-weight:bold;
+
+    vertical-align: bottom;
+}
+
+
+#pptList>li>a{
+    cursor: pointer;
+}
+
+#qrcode:hover{
+    -webkit-transform:scale(1.5);
+}
+
+.func-group{
+    float:left;
+    padding:0 5px;
+}
+
+.ui-sortable{
+    height:880px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    top:110px;
+    bottom:60px;
+    width:240px;
+}
+
+.ui-sortable canvas:hover{
+    cursor: pointer;
+}
+

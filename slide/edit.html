@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<!--[if lt IE 9]><script src="../js/jquery-1.9.1.js"></script><![endif]-->
+		<!--[if gte IE 9]><!--><script src="../js/jquery-2.0.0b2.js"></script><!--<![endif]-->
+		<meta charset="utf-8" />
+		<title>云演示 - 360 安全浏览器实验室</title>
+		<link href="../css/app/slide.css" rel="styleSheet" />
+		<link rel="stylesheet" href="../css/bootstrap.css">
+		<link rel="stylesheet" href="../css/font-awesome.min.css">
+		<script src="../js/jquery-ui-1.10.2.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery.colorpicker.js"></script>
+		<script src="../js/app/slide.js"></script>
+		<script src="../js/app/toolBar.js"></script>
+		<script src="../js/app/editor.js"></script>
+	</head>
+	<body>
+		<div id="toolbar">
+		</div>
+		<div class="slide" data-name="首页">
+			<div class="rect" style="left: 100px; top: 200px; width: 800px; height: 100px;  font-weight:bold; text-align:center;">
+				<div><span>[点击输入标题]</span></div>
+			</div>
+			<div class="rect" style="left: 100px; top: 400px; width: 800px; height: 50px; font-size: 32px; text-align:right;">
+				<span>[点击输入副标题]</span></div>
+				<img tabindex="1" src="../img/colorpicker.png" class="rect" alt="">
+		</div>
+		
+		<script>
+		(function(){
+			var toolbar = new ToolBar('toolbar');
+			var editor = new Editor(toolbar);
+		//	debugger;
+		//	editor.setSlide($("#content")[0].contentWindow.$(".rect"));
+		})()
+			
+/*		 (function(exports){
+		 	function ToolBar () {}
+
+		 	function SelectStatus() {};
+		 })
+
+		 var t = new ToolBar({})
+		 var s = new SelectStatus({});
+
+		 t.on('focus', function() {  s.changeStatus("rect"); });
+*/
+	/*		var $rects = $('.rect');
+			var rect1 = new Slide.TextRect( $rects[0] );
+			$(rect1).on('CTRL+B',function(e) {
+				rect1.setStyle(function(el) {
+					$(el).css('font-weight','bold');
+				});
+			});
+			var rect2 = new Slide.TextRect( $rects[1] );
+			$(rect2).on('CTRL+B',function(e) {
+				rect2.setStyle(function(el) {
+					$(el).css('font-weight','bold');
+				});
+			});*/
+		//	var $rects = $('#toolbar');
+		//	var rect1 = new ToolBar( $rects[0] );
+		</script>
+	</body>
+</html>
